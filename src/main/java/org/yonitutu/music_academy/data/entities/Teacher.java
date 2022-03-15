@@ -1,44 +1,27 @@
 package org.yonitutu.music_academy.data.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "teachers")
-public class Teacher extends BaseEntity {
-    @Column
-    private String name;
-
-    @Column
-    private int age;
-
-    @ManyToOne
-    @JoinColumn(name = "instrument_id", nullable = false)
-    private Instrument instrument;
+public class Teacher extends PersonEntity {
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "teachers_instruments",
+            joinColumns = {@JoinColumn(name = "teacher_id")},
+            inverseJoinColumns = {@JoinColumn(name = "instrument_id")}
+    )
+    private List<Instrument> instruments;
 
     public Teacher() {
     }
 
-    public String getName() {
-        return name;
+    public List<Instrument> getInstruments() {
+        return instruments;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
     }
 }
