@@ -1,44 +1,52 @@
 package org.yonitutu.music_academy.data.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "students")
-public class Student extends BaseEntity {
-    @Column
-    private String name;
+public class Student extends PersonEntity {
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "students_music_groups",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "music_group_id")}
+    )
+    private List<MusicGroup> musicGroups;
 
-    @Column
-    private int age;
-
-    @ManyToOne
-    @JoinColumn(name = "music_group_id", nullable = false)
-    private MusicGroup musicGroup;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "students_instruments",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "instrument_id")}
+    )
+    private List<Instrument> instruments;
 
     public Student() {
     }
 
-    public String getName() {
-        return name;
+
+    public Student(String name, int age) {
+        super(name, age);
+        instruments = new ArrayList<>();
+        musicGroups = new ArrayList<>();
+
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<MusicGroup> getMusicGroups() {
+        return musicGroups;
     }
 
-    public int getAge() {
-        return age;
+    public void setMusicGroups(List<MusicGroup> musicGroups) {
+        this.musicGroups = musicGroups;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public List<Instrument> getInstruments() {
+        return instruments;
     }
 
-    public MusicGroup getMusicGroup() {
-        return musicGroup;
-    }
-
-    public void setMusicGroup(MusicGroup musicGroup) {
-        this.musicGroup = musicGroup;
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
     }
 }

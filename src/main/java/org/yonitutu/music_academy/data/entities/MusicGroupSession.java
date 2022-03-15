@@ -2,6 +2,8 @@ package org.yonitutu.music_academy.data.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "music_group_sessions")
@@ -16,7 +18,23 @@ public class MusicGroupSession extends BaseEntity {
     @JoinColumn(name = "music_group_id", nullable = false)
     private MusicGroup musicGroup;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "music_group_sessions_participants",
+            joinColumns = {@JoinColumn(name = "music_group_session_id")},
+            inverseJoinColumns = {@JoinColumn(name = "student_id")}
+    )
+    private List<Student> participants;
+
     public MusicGroupSession() {
+    }
+
+    public MusicGroupSession(LocalDateTime startTime, LocalDateTime endTime, MusicGroup musicGroup) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.musicGroup = musicGroup;
+        this.participants = new ArrayList<>();
+
     }
 
     public LocalDateTime getStartTime() {
@@ -41,5 +59,13 @@ public class MusicGroupSession extends BaseEntity {
 
     public void setMusicGroup(MusicGroup musicGroup) {
         this.musicGroup = musicGroup;
+    }
+
+    public List<Student> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Student> participants) {
+        this.participants = participants;
     }
 }

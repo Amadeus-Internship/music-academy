@@ -11,6 +11,10 @@ public class Instrument extends BaseEntity {
     public Instrument() {
     }
 
+    public Instrument(String type) {
+        this.type = type;
+    }
+
     public String getType() {
         return type;
     }
