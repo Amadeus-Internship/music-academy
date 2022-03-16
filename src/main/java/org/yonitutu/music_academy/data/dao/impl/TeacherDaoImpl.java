@@ -1,6 +1,7 @@
 package org.yonitutu.music_academy.data.dao.impl;
 
 import org.yonitutu.music_academy.data.dao.api.TeacherDao;
+import org.yonitutu.music_academy.data.dao.api.functions.ExecuteTransactional;
 import org.yonitutu.music_academy.data.entities.Teacher;
 
 import javax.persistence.EntityManager;
@@ -28,39 +29,25 @@ public class TeacherDaoImpl extends BaseDao implements TeacherDao {
 
     @Override
     public Teacher create(Teacher teacher) {
-        this.entityManager.getTransaction().begin();
 
-        this.entityManager.persist(teacher);
-
-        this.entityManager.flush();
-
-        this.entityManager.getTransaction().commit();
+        this.executeTransactional(()-> entityManager.persist(teacher));
 
         return teacher;
     }
 
     @Override
     public Teacher edit(Teacher editedEntity) {
-        this.entityManager.getTransaction().begin();
 
-        this.entityManager.merge(editedEntity);
-
-        this.entityManager.flush();
-
-        this.entityManager.getTransaction().commit();
+        this.executeTransactional(() -> entityManager.merge(editedEntity));
 
         return editedEntity;
     }
 
     @Override
     public Teacher delete(Teacher entityToDelete) {
-        this.entityManager.getTransaction().begin();
 
-        this.entityManager.remove(entityToDelete);
+        this.executeTransactional(() -> entityManager.remove(entityToDelete));
 
-        this.entityManager.flush();
-
-        this.entityManager.getTransaction().commit();
 
         return entityToDelete;
     }

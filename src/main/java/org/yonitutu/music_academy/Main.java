@@ -22,7 +22,7 @@ public class Main {
         InstrumentDao instrumentDao = new InstrumentDaoImpl(entityManager);
         TeacherDao teacherDao = new TeacherDaoImpl(entityManager);
 
-        Teacher ivan = teacherDao.findById(6);
+        Teacher ivan = teacherDao.findById(5);
 
         teacherDao.delete(ivan);
     }
