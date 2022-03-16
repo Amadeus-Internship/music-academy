@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class TeacherDaoImpl extends BaseDao<Teacher, Integer> implements TeacherDao {
+public class TeacherDaoImpl extends BaseDao implements TeacherDao {
     public TeacherDaoImpl(EntityManager entityManager) {
         super(entityManager);
     }
@@ -24,6 +24,24 @@ public class TeacherDaoImpl extends BaseDao<Teacher, Integer> implements Teacher
         Query query = this.entityManager.createNativeQuery(("SELECT * FROM teachers WHERE id = " + integer), Teacher.class);
 
         return (Teacher) query.getSingleResult();
+    }
+
+    @Override
+    public Teacher create(Teacher teacher) {
+        this.executeTransactional(() -> this.entityManager.merge(teacher));
+        return teacher;
+    }
+
+    @Override
+    public Teacher edit(Teacher editedEntity) {
+       this.executeTransactional(() -> this.entityManager.merge(editedEntity));
+       return editedEntity;
+    }
+
+    @Override
+    public Teacher delete(Teacher entityToDelete) {
+        this.executeTransactional(() -> this.entityManager.remove(entityToDelete));
+        return entityToDelete;
     }
 
 }

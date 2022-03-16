@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class InstrumentDaoImpl extends BaseDao<Instrument, Integer> implements InstrumentDao {
+public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
     public InstrumentDaoImpl(EntityManager entityManager) {
         super(entityManager);
     }
@@ -22,9 +22,27 @@ public class InstrumentDaoImpl extends BaseDao<Instrument, Integer> implements I
 
     @Override
     public Instrument findById(Integer integer) {
-        Query query = this.entityManager.createNativeQuery(("SELECT * FROM teachers WHERE id = " + integer), Instrument.class);
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM instruments WHERE id = " + integer), Instrument.class);
 
         return (Instrument) query.getSingleResult();
+    }
+
+    @Override
+    public Instrument create(Instrument instrument) {
+        this.executeTransactional(() -> this.entityManager.persist(instrument));
+        return instrument;
+    }
+
+    @Override
+    public Instrument edit(Instrument editedEntity) {
+        this.executeTransactional(() -> this.entityManager.merge(editedEntity));
+        return editedEntity;
+    }
+
+    @Override
+    public Instrument delete(Instrument entityToDelete) {
+        this.executeTransactional(() -> this.entityManager.remove(entityToDelete));
+        return entityToDelete;
     }
 
 }

@@ -1,9 +1,10 @@
 package org.yonitutu.music_academy.data.dao.impl;
 
+import org.yonitutu.music_academy.data.common.QueryExecutor;
 import org.yonitutu.music_academy.data.dao.api.Dao;
 import javax.persistence.EntityManager;
 
-public abstract class BaseDao<TEntity, TId> implements Dao<TEntity, TId> {
+public abstract class BaseDao {
     protected EntityManager entityManager;
 
     public BaseDao(EntityManager entityManager) {
@@ -11,42 +12,16 @@ public abstract class BaseDao<TEntity, TId> implements Dao<TEntity, TId> {
     }
 
 
-    @Override
-    public TEntity create(TEntity entity){
+    
+    protected void executeTransactional(QueryExecutor executor){
         this.entityManager.getTransaction().begin();
 
-        this.entityManager.persist(entity);
+        executor.execute();
 
         this.entityManager.flush();
 
         this.entityManager.getTransaction().commit();
 
-        return entity;
     }
 
-    @Override
-    public TEntity edit(TEntity editedEntity) {
-        this.entityManager.getTransaction().begin();
-
-        this.entityManager.merge(editedEntity);
-
-        this.entityManager.flush();
-
-        this.entityManager.getTransaction().commit();
-
-        return editedEntity;
-    }
-
-    @Override
-    public TEntity delete(TEntity entityToDelete) {
-        this.entityManager.getTransaction().begin();
-
-        this.entityManager.remove(entityToDelete);
-
-        this.entityManager.flush();
-
-        this.entityManager.getTransaction().commit();
-
-        return entityToDelete;
-    }
 }
