@@ -30,7 +30,6 @@ public class MusicGroupSessionDaoImpl extends BaseDao implements MusicGroupSessi
 
     @Override
     public MusicGroupSession create(MusicGroupSession musicGroupSession) {
-
         this.executeTransactional(()-> entityManager.persist(musicGroupSession));
 
         return musicGroupSession;

@@ -29,7 +29,6 @@ public class TeacherDaoImpl extends BaseDao implements TeacherDao {
 
     @Override
     public Teacher create(Teacher teacher) {
-
         this.executeTransactional(()-> entityManager.persist(teacher));
 
         return teacher;
@@ -37,7 +36,6 @@ public class TeacherDaoImpl extends BaseDao implements TeacherDao {
 
     @Override
     public Teacher edit(Teacher editedEntity) {
-
         this.executeTransactional(() -> entityManager.merge(editedEntity));
 
         return editedEntity;
@@ -45,7 +43,6 @@ public class TeacherDaoImpl extends BaseDao implements TeacherDao {
 
     @Override
     public Teacher delete(Teacher entityToDelete) {
-
         this.executeTransactional(() -> entityManager.remove(entityToDelete));
 
 

@@ -43,7 +43,6 @@ public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
 
     @Override
     public Instrument delete(Instrument entityToDelete) {
-
         this.executeTransactional(() -> entityManager.remove(entityToDelete));
 
         return entityToDelete;

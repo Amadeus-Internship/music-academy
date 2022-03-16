@@ -36,7 +36,6 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
 
     @Override
     public Student edit(Student editedEntity) {
-
         this.executeTransactional(() -> entityManager.merge(editedEntity));
 
         return editedEntity;
@@ -44,7 +43,6 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
 
     @Override
     public Student delete(Student entityToDelete) {
-
         this.executeTransactional(() -> entityManager.remove(entityToDelete));
 
         return entityToDelete;
