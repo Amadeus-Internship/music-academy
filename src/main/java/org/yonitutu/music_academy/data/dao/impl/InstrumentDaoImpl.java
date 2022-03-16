@@ -2,12 +2,13 @@ package org.yonitutu.music_academy.data.dao.impl;
 
 import org.yonitutu.music_academy.data.dao.api.InstrumentDao;
 import org.yonitutu.music_academy.data.entities.Instrument;
+import org.yonitutu.music_academy.data.entities.Teacher;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
+public class InstrumentDaoImpl extends BaseDao<Instrument, Integer> implements InstrumentDao {
     public InstrumentDaoImpl(EntityManager entityManager) {
         super(entityManager);
     }
@@ -21,21 +22,9 @@ public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
 
     @Override
     public Instrument findById(Integer integer) {
-        return null;
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM teachers WHERE id = " + integer), Instrument.class);
+
+        return (Instrument) query.getSingleResult();
     }
 
-    @Override
-    public Instrument create(Instrument instrument) {
-        return null;
-    }
-
-    @Override
-    public Instrument edit(Instrument editedEntity) {
-        return null;
-    }
-
-    @Override
-    public Instrument delete(Instrument entityToDelete) {
-        return null;
-    }
 }
