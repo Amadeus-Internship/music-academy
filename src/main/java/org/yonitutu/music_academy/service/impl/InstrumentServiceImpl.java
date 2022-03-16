@@ -6,6 +6,7 @@ import org.yonitutu.music_academy.data.entities.Instrument;
 import org.yonitutu.music_academy.service.api.InstrumentService;
 import org.yonitutu.music_academy.service.dto.InstrumentDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,28 +22,20 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public List<InstrumentDto> getAllInstruments() {
-        return this.instrumentDao.findAll()
-                .stream()
-                .map(instrumentEntity -> {
-                    InstrumentDto instrumentDto = new InstrumentDto();
-
-                    instrumentDto.setId(instrumentEntity.getId());
-                    instrumentDto.setType(instrumentEntity.getType());
-
-                    return instrumentDto;
-                })
-                .collect(Collectors.toList());
+        List<Instrument> instrumentList = this.instrumentDao.findAll();
+        List<InstrumentDto> returnList = new ArrayList<>();
+        for (Instrument instrument : instrumentList) {
+           InstrumentDto currentInstrument = modelMapper.map(instrument, InstrumentDto.class);
+            returnList.add(currentInstrument);
+        }
+        return returnList;
     }
 
     @Override
     public InstrumentDto getInstrumentById(Integer id) {
         Instrument instrumentEntity = this.instrumentDao.findById(id);
-        InstrumentDto instrumentDto = new InstrumentDto();
 
-        instrumentDto.setId(instrumentEntity.getId());
-        instrumentDto.setType(instrumentEntity.getType());
-
-        return instrumentDto;
+        return modelMapper.map(instrumentEntity, InstrumentDto.class);
     }
 
     @Override
@@ -53,12 +46,8 @@ public class InstrumentServiceImpl implements InstrumentService {
 
         instrumentEntity = this.instrumentDao.create(instrumentEntity);
 
-        InstrumentDto resultDto = new InstrumentDto();
+        return modelMapper.map(instrumentEntity, InstrumentDto.class);
 
-        resultDto.setType(instrumentEntity.getType());
-        resultDto.setId(instrumentEntity.getId());
-
-        return resultDto;
     }
 
     @Override
@@ -69,12 +58,7 @@ public class InstrumentServiceImpl implements InstrumentService {
 
         instrumentEntityToEdit = this.instrumentDao.edit(instrumentEntityToEdit);
 
-        InstrumentDto resultDto = new InstrumentDto();
-
-        resultDto.setType(instrumentEntityToEdit.getType());
-        resultDto.setId(instrumentEntityToEdit.getId());
-
-        return resultDto;
+        return modelMapper.map(instrumentEntityToEdit, InstrumentDto.class);
     }
 
     @Override
@@ -82,11 +66,6 @@ public class InstrumentServiceImpl implements InstrumentService {
         Instrument instrumentEntityToDelete = this.instrumentDao.findById(id);
         this.instrumentDao.delete(instrumentEntityToDelete);
 
-        InstrumentDto resultDto = new InstrumentDto();
-
-        resultDto.setType(instrumentEntityToDelete.getType());
-        resultDto.setId(instrumentEntityToDelete.getId());
-
-        return resultDto;
+        return modelMapper.map(instrumentEntityToDelete, InstrumentDto.class);
     }
 }
