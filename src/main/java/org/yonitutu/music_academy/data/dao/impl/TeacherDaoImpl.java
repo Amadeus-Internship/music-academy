@@ -14,6 +14,12 @@ public class TeacherDaoImpl extends BaseDao implements TeacherDao {
     }
 
     @Override
+    public Teacher findByName(String name) {
+        Query query = this.entityManager.createNativeQuery("SELECT * FROM teachers WHERE name = " + name);
+        return (Teacher)  query.getSingleResult();
+    }
+
+    @Override
     public List<Teacher> findAll() {
         Query query = this.entityManager.createNativeQuery("SELECT * FROM teachers", Teacher.class);
 

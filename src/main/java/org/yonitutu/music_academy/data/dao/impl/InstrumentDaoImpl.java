@@ -6,11 +6,18 @@ import org.yonitutu.music_academy.data.entities.Teacher;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
     public InstrumentDaoImpl(EntityManager entityManager) {
         super(entityManager);
+    }
+
+    @Override
+    public Instrument findByName(String name) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM instruments WHERE type = " + name);
+        return (Instrument) query.getSingleResult();
     }
 
     @Override

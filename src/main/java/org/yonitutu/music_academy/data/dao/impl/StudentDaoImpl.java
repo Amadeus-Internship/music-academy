@@ -47,4 +47,11 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
 
         return entityToDelete;
     }
+
+    @Override
+    public Student findByName(String name) {
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM students WHERE name = " + name), Student.class);
+
+        return (Student) query.getSingleResult();
+    }
 }

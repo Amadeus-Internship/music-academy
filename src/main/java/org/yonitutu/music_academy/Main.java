@@ -22,22 +22,24 @@ public class Main {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("musicacademy");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        Teacher teacher = new Teacher();
 
-        teacher.setId(1);
-        teacher.setName("Prakash");
-        teacher.setAge(35);
-        List<Instrument> instruments = new ArrayList<>();
-        Instrument prakashInstrument = new Instrument();
-        prakashInstrument.setType("Duduk");
-        instruments.add(prakashInstrument);
-        teacher.setInstruments(instruments);
 
-        ModelMapper modelMapper = new ModelMapper();
-
-        TeacherDto teacherDto = modelMapper.map(teacher, TeacherDto.class);
-
-        System.out.println(teacherDto.getInstruments().stream().findFirst().orElse(null).getType());
+//        Teacher teacher = new Teacher();
+//
+//        teacher.setId(1);
+//        teacher.setName("Prakash");
+//        teacher.setAge(35);
+//        List<Instrument> instruments = new ArrayList<>();
+//        Instrument prakashInstrument = new Instrument();
+//        prakashInstrument.setType("Duduk");
+//        instruments.add(prakashInstrument);
+//        teacher.setInstruments(instruments);
+//
+//        ModelMapper modelMapper = new ModelMapper();
+//
+//        TeacherDto teacherDto = modelMapper.map(teacher, TeacherDto.class);
+//
+//        System.out.println(teacherDto.getInstruments().stream().findFirst().orElse(null).getType());
 
     }
 }

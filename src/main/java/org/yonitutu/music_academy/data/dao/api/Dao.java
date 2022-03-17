@@ -12,4 +12,6 @@ public interface Dao<TEntity, TId> {
     TEntity edit(TEntity editedEntity);
 
     TEntity delete(TEntity entityToDelete);
+
+    TEntity findByName(String name);
 }

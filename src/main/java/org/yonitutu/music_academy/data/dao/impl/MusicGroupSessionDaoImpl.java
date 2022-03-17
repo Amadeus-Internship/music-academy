@@ -22,8 +22,8 @@ public class MusicGroupSessionDaoImpl extends BaseDao implements MusicGroupSessi
     }
 
     @Override
-    public MusicGroupSession findById(Integer integer) {
-        Query query = this.entityManager.createNativeQuery(("SELECT * FROM music_group_sessions WHERE id = " + integer), MusicGroupSession.class);
+    public MusicGroupSession findById(Integer id) {
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM music_group_sessions WHERE id = " + id), MusicGroupSession.class);
 
         return (MusicGroupSession) query.getSingleResult();
     }
@@ -47,5 +47,13 @@ public class MusicGroupSessionDaoImpl extends BaseDao implements MusicGroupSessi
         this.executeTransactional(() -> entityManager.remove(entityToDelete));
 
         return entityToDelete;
+    }
+
+    @Override
+    public MusicGroupSession findByName(String name) {
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM music_group_sessions WHERE name = " + name)
+                , MusicGroupSession.class);
+
+        return (MusicGroupSession) query.getSingleResult();
     }
 }
