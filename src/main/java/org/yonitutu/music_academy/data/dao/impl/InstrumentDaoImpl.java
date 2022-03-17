@@ -14,6 +14,12 @@ public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
     }
 
     @Override
+    public Instrument findByName(String type){
+        Query query = entityManager.createNativeQuery("SELECT * FROM instruments where type " + type);
+        return (Instrument) query.getSingleResult();
+    }
+
+    @Override
     public List<Instrument> findAll() {
         Query query = this.entityManager.createNativeQuery("SELECT * FROM instruments", Instrument.class);
 
@@ -29,20 +35,22 @@ public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
 
     @Override
     public Instrument create(Instrument instrument) {
-        this.executeTransactional(() -> this.entityManager.persist(instrument));
+        this.executeTransactional(()-> entityManager.persist(instrument));
+
         return instrument;
     }
 
     @Override
     public Instrument edit(Instrument editedEntity) {
-        this.executeTransactional(() -> this.entityManager.merge(editedEntity));
+        this.executeTransactional(() -> entityManager.merge(editedEntity));
+
         return editedEntity;
     }
 
     @Override
     public Instrument delete(Instrument entityToDelete) {
-        this.executeTransactional(() -> this.entityManager.remove(entityToDelete));
+        this.executeTransactional(() -> entityManager.remove(entityToDelete));
+
         return entityToDelete;
     }
-
 }

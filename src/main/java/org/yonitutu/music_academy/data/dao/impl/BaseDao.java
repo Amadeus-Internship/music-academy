@@ -1,27 +1,23 @@
 package org.yonitutu.music_academy.data.dao.impl;
 
-import org.yonitutu.music_academy.data.common.QueryExecutor;
-import org.yonitutu.music_academy.data.dao.api.Dao;
+import org.yonitutu.music_academy.data.dao.api.functions.ExecuteTransactional;
+
 import javax.persistence.EntityManager;
 
 public abstract class BaseDao {
     protected EntityManager entityManager;
 
-    public BaseDao(EntityManager entityManager) {
+    protected BaseDao(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-
-    
-    protected void executeTransactional(QueryExecutor executor){
+    void executeTransactional(ExecuteTransactional ex){
         this.entityManager.getTransaction().begin();
 
-        executor.execute();
+        ex.execute();
 
         this.entityManager.flush();
 
         this.entityManager.getTransaction().commit();
-
     }
-
 }

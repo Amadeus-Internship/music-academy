@@ -1,14 +1,16 @@
 package org.yonitutu.music_academy.data.dao.impl;
 
 import org.yonitutu.music_academy.data.dao.api.StudentDao;
+import org.yonitutu.music_academy.data.entities.Instrument;
 import org.yonitutu.music_academy.data.entities.Student;
+import org.yonitutu.music_academy.data.entities.Teacher;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
 public class StudentDaoImpl extends BaseDao implements StudentDao {
-
-    public StudentDaoImpl(EntityManager entityManager) {
+    protected StudentDaoImpl(EntityManager entityManager) {
         super(entityManager);
     }
 
@@ -27,20 +29,29 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
     }
 
     @Override
+    public Student findByName(String name) {
+            Query query = this.entityManager.createNativeQuery("SELECT * FROM students WHERE name = " + name);
+            return (Student) query.getSingleResult();
+    }
+
+    @Override
     public Student create(Student student) {
-        this.executeTransactional(() -> this.entityManager.persist(student));
+        this.executeTransactional(()-> entityManager.persist(student));
+
         return student;
     }
 
     @Override
     public Student edit(Student editedEntity) {
-       this.executeTransactional(() -> this.entityManager.merge(editedEntity));
-       return editedEntity;
+        this.executeTransactional(() -> entityManager.merge(editedEntity));
+
+        return editedEntity;
     }
 
     @Override
     public Student delete(Student entityToDelete) {
-        this.executeTransactional(() -> this.entityManager.remove(entityToDelete));
+        this.executeTransactional(() -> entityManager.remove(entityToDelete));
+
         return entityToDelete;
     }
 }

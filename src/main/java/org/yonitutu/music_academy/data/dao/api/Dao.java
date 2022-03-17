@@ -7,6 +7,8 @@ public interface Dao<TEntity, TId> {
 
     TEntity findById(TId id);
 
+    TEntity findByName(String name);
+
     TEntity create(TEntity entity);
 
     TEntity edit(TEntity editedEntity);

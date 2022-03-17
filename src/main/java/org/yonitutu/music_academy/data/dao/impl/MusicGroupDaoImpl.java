@@ -2,14 +2,14 @@ package org.yonitutu.music_academy.data.dao.impl;
 
 import org.yonitutu.music_academy.data.dao.api.MusicGroupDao;
 import org.yonitutu.music_academy.data.entities.MusicGroup;
+import org.yonitutu.music_academy.data.entities.Student;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
 public class MusicGroupDaoImpl extends BaseDao implements MusicGroupDao {
-
-    public MusicGroupDaoImpl(EntityManager entityManager) {
+    protected MusicGroupDaoImpl(EntityManager entityManager) {
         super(entityManager);
     }
 
@@ -28,20 +28,30 @@ public class MusicGroupDaoImpl extends BaseDao implements MusicGroupDao {
     }
 
     @Override
+    public MusicGroup findByName(String name) {
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM music_groups WHERE name = " + name), MusicGroup.class);
+
+        return (MusicGroup) query.getSingleResult();
+    }
+
+    @Override
     public MusicGroup create(MusicGroup musicGroup) {
-        this.executeTransactional(() -> this.entityManager.persist(musicGroup));
+        this.executeTransactional(()-> entityManager.persist(musicGroup));
+
         return musicGroup;
     }
 
     @Override
     public MusicGroup edit(MusicGroup editedEntity) {
-        this.executeTransactional(() -> this.entityManager.merge(editedEntity));
+        this.executeTransactional(() -> entityManager.merge(editedEntity));
+
         return editedEntity;
     }
 
     @Override
     public MusicGroup delete(MusicGroup entityToDelete) {
-        this.executeTransactional(() -> this.entityManager.remove(entityToDelete));
+        this.executeTransactional(() -> entityManager.remove(entityToDelete));
+
         return entityToDelete;
     }
 }
