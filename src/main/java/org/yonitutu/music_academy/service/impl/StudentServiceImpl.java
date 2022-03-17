@@ -1,7 +1,11 @@
 package org.yonitutu.music_academy.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.yonitutu.music_academy.data.dao.api.InstrumentDao;
+import org.yonitutu.music_academy.data.dao.api.MusicGroupDao;
 import org.yonitutu.music_academy.data.dao.api.StudentDao;
+import org.yonitutu.music_academy.data.entities.Instrument;
+import org.yonitutu.music_academy.data.entities.MusicGroup;
 import org.yonitutu.music_academy.data.entities.Student;
 import org.yonitutu.music_academy.service.api.StudentService;
 import org.yonitutu.music_academy.service.dto.*;
@@ -11,10 +15,16 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
     private final StudentDao studentDao;
 
+    private final InstrumentDao instrumentDao;
+
+    private final MusicGroupDao musicGroupDao;
+
     private final ModelMapper modelMapper;
 
-    public StudentServiceImpl(StudentDao studentDao, ModelMapper modelMapper) {
+    public StudentServiceImpl(StudentDao studentDao, InstrumentDao instrumentDao, MusicGroupDao musicGroupDao, ModelMapper modelMapper) {
         this.studentDao = studentDao;
+        this.instrumentDao = instrumentDao;
+        this.musicGroupDao = musicGroupDao;
         this.modelMapper = modelMapper;
     }
 
@@ -59,11 +69,21 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto addInstrument(StudentInstrumentDto studentInstrumentDto) {
-        return null;
+        String instrumentName = studentInstrumentDto.getInstrumentName();
+        String studentName = studentInstrumentDto.getStudentName();
+        Student studentEntity = this.studentDao.findByName(studentName);
+        Instrument instrumentEntity = this.instrumentDao.findByName(instrumentName);
+        studentEntity.getInstruments().add(instrumentEntity);
+        return this.modelMapper.map(studentEntity, StudentDto.class);
     }
 
     @Override
-    public StudentDto addMusicGroup(MusicGroupDto musicGroupDto) {
-        return null;
+    public StudentDto addMusicGroup(StudentMusicGroupDto studentMusicGroupDto) {
+        String studentName = studentMusicGroupDto.getStudentName();
+        String musicGroupName = studentMusicGroupDto.getMusicGroupName();
+        Student studentEntity = this.studentDao.findByName(studentName);
+        MusicGroup musicGroupEntity = this.musicGroupDao.findByName(musicGroupName);
+        studentEntity.getMusicGroups().add(musicGroupEntity);
+        return this.modelMapper.map(studentEntity, StudentDto.class);
     }
 }

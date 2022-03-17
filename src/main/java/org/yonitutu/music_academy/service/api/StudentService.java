@@ -18,5 +18,5 @@ public interface StudentService {
 
     StudentDto addInstrument(StudentInstrumentDto studentInstrumentDto);
 
-    StudentDto addMusicGroup(MusicGroupDto musicGroupDto);
+    StudentDto addMusicGroup(StudentMusicGroupDto studentMusicGroupDto);
 }

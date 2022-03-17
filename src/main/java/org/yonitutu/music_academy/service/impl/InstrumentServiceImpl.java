@@ -44,14 +44,10 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public InstrumentDto editInstrument(Integer id, InstrumentDto newInstrument) {
-        InstrumentDto instrumentToEdit = modelMapper.map(this.instrumentDao.findById(id), InstrumentDto.class);
-        InstrumentDto editedInstrument = this.modelMapper.map(
-                this.instrumentDao
-                        .create(
-                        this.modelMapper.map(newInstrument, Instrument.class))
-                , InstrumentDto.class);
-         instrumentToEdit = editedInstrument;
-         return instrumentToEdit;
+        Instrument instrumentToEdit = instrumentDao.findById(id);
+        Instrument newInstrumentBase = modelMapper.map(newInstrument, Instrument.class);
+        instrumentToEdit.setType(newInstrumentBase.getType());
+        return modelMapper.map(instrumentToEdit, InstrumentDto.class);
     }
 
     @Override

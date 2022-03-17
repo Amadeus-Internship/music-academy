@@ -28,12 +28,12 @@ public class MusicGroupServiceImpl implements MusicGroupService {
 
     @Override
     public MusicGroupDto editMusicGroup(Integer id, MusicGroupDto newMusicGroup) {
-        MusicGroup musicGroupToEdit = musicGroupDao.findById(id);
-        MusicGroup newMusicGroupBase = modelMapper.map(newMusicGroup, MusicGroup.class);
+        MusicGroup musicGroupToEdit = this.musicGroupDao.findById(id);
+        MusicGroup newMusicGroupBase = this.modelMapper.map(newMusicGroup, MusicGroup.class);
         musicGroupToEdit.setTeacher(newMusicGroupBase.getTeacher());
         musicGroupToEdit.setInstrument(newMusicGroupBase.getInstrument());
         musicGroupToEdit.setName(newMusicGroupBase.getName());
-        return modelMapper.map(musicGroupToEdit, MusicGroupDto.class);
+        return this.modelMapper.map(musicGroupToEdit, MusicGroupDto.class);
     }
 
     @Override
