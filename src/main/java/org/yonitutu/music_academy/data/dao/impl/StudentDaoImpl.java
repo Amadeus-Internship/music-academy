@@ -4,7 +4,6 @@ import org.yonitutu.music_academy.data.dao.api.StudentDao;
 import org.yonitutu.music_academy.data.entities.Instrument;
 import org.yonitutu.music_academy.data.entities.Student;
 import org.yonitutu.music_academy.data.entities.Teacher;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;

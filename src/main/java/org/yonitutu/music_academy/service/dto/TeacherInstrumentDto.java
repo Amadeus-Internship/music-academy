@@ -1,6 +1,8 @@
 package org.yonitutu.music_academy.service.dto;
 
+
 public class TeacherInstrumentDto extends BaseDto{
+
     private String teacherName;
 
     private String instrumentName;

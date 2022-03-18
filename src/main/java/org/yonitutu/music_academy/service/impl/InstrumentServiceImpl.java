@@ -30,8 +30,8 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public InstrumentDto getInstrumentById(Integer id) {
         Instrument instrumentEntity = this.instrumentDao.findById(id);
-
         return this.modelMapper.map(instrumentEntity, InstrumentDto.class);
+
     }
 
     @Override
@@ -48,6 +48,7 @@ public class InstrumentServiceImpl implements InstrumentService {
         Instrument newInstrumentBase = modelMapper.map(newInstrument, Instrument.class);
         instrumentToEdit.setType(newInstrumentBase.getType());
         return modelMapper.map(instrumentToEdit, InstrumentDto.class);
+
     }
 
     @Override
@@ -55,5 +56,6 @@ public class InstrumentServiceImpl implements InstrumentService {
         Instrument instrumentToDelete = this.instrumentDao.findById(id);
         this.instrumentDao.delete(instrumentToDelete);
         return this.modelMapper.map(instrumentToDelete, InstrumentDto.class);
+
     }
 }
