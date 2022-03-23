@@ -3,7 +3,7 @@ package org.yonitutu.music_academy.data.dao.impl;
 import org.yonitutu.music_academy.data.dao.api.StudentDao;
 import org.yonitutu.music_academy.data.entities.Instrument;
 import org.yonitutu.music_academy.data.entities.Student;
-
+import org.yonitutu.music_academy.data.entities.Teacher;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
@@ -25,6 +25,12 @@ public class StudentDaoImpl extends BaseDao implements StudentDao {
         Query query = this.entityManager.createNativeQuery(("SELECT * FROM students WHERE id = " + integer), Student.class);
 
         return (Student) query.getSingleResult();
+    }
+
+    @Override
+    public Student findByName(String name) {
+            Query query = this.entityManager.createNativeQuery("SELECT * FROM students WHERE name = " + name);
+            return (Student) query.getSingleResult();
     }
 
     @Override

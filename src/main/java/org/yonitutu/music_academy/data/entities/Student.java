@@ -24,4 +24,20 @@ public class Student extends PersonEntity {
 
     public Student() {
     }
+
+    public List<MusicGroup> getMusicGroups() {
+        return musicGroups;
+    }
+
+    public void setMusicGroups(List<MusicGroup> musicGroups) {
+        this.musicGroups = musicGroups;
+    }
+
+    public List<Instrument> getInstruments() {
+        return instruments;
+    }
+
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
+    }
 }

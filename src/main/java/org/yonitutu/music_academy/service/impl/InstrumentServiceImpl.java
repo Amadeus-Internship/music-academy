@@ -5,8 +5,6 @@ import org.yonitutu.music_academy.data.dao.api.InstrumentDao;
 import org.yonitutu.music_academy.data.entities.Instrument;
 import org.yonitutu.music_academy.service.api.InstrumentService;
 import org.yonitutu.music_academy.service.dto.InstrumentDto;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,50 +20,42 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public List<InstrumentDto> getAllInstruments() {
-        List<Instrument> instrumentList = this.instrumentDao.findAll();
-        List<InstrumentDto> returnList = new ArrayList<>();
-        for (Instrument instrument : instrumentList) {
-           InstrumentDto currentInstrument = modelMapper.map(instrument, InstrumentDto.class);
-            returnList.add(currentInstrument);
-        }
-        return returnList;
+          return this.instrumentDao
+                  .findAll()
+                  .stream()
+                  .map(i -> this.modelMapper.map(i, InstrumentDto.class))
+                  .collect(Collectors.toList());
     }
 
     @Override
     public InstrumentDto getInstrumentById(Integer id) {
         Instrument instrumentEntity = this.instrumentDao.findById(id);
+        return this.modelMapper.map(instrumentEntity, InstrumentDto.class);
 
-        return modelMapper.map(instrumentEntity, InstrumentDto.class);
     }
 
     @Override
     public InstrumentDto addInstrument(InstrumentDto instrumentDto) {
-        Instrument instrumentEntity = new Instrument();
-
-        instrumentEntity.setType(instrumentDto.getType());
-
-        instrumentEntity = this.instrumentDao.create(instrumentEntity);
-
-        return modelMapper.map(instrumentEntity, InstrumentDto.class);
-
+       return this.modelMapper.map(
+               this.instrumentDao.create(
+                       this.modelMapper.map(instrumentDto, Instrument.class))
+               , InstrumentDto.class);
     }
 
     @Override
     public InstrumentDto editInstrument(Integer id, InstrumentDto newInstrument) {
-        Instrument instrumentEntityToEdit = this.instrumentDao.findById(id);
+        Instrument instrumentToEdit = instrumentDao.findById(id);
+        Instrument newInstrumentBase = modelMapper.map(newInstrument, Instrument.class);
+        instrumentToEdit.setType(newInstrumentBase.getType());
+        return modelMapper.map(instrumentToEdit, InstrumentDto.class);
 
-        instrumentEntityToEdit.setType(newInstrument.getType());
-
-        instrumentEntityToEdit = this.instrumentDao.edit(instrumentEntityToEdit);
-
-        return modelMapper.map(instrumentEntityToEdit, InstrumentDto.class);
     }
 
     @Override
     public InstrumentDto deleteInstrument(Integer id) {
-        Instrument instrumentEntityToDelete = this.instrumentDao.findById(id);
-        this.instrumentDao.delete(instrumentEntityToDelete);
+        Instrument instrumentToDelete = this.instrumentDao.findById(id);
+        this.instrumentDao.delete(instrumentToDelete);
+        return this.modelMapper.map(instrumentToDelete, InstrumentDto.class);
 
-        return modelMapper.map(instrumentEntityToDelete, InstrumentDto.class);
     }
 }

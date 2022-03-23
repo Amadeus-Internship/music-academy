@@ -2,13 +2,15 @@ package org.yonitutu.music_academy;
 
 import org.modelmapper.ModelMapper;
 import org.yonitutu.music_academy.data.dao.api.InstrumentDao;
+import org.yonitutu.music_academy.data.dao.api.StudentDao;
 import org.yonitutu.music_academy.data.dao.api.TeacherDao;
 import org.yonitutu.music_academy.data.dao.impl.InstrumentDaoImpl;
+import org.yonitutu.music_academy.data.dao.impl.StudentDaoImpl;
 import org.yonitutu.music_academy.data.dao.impl.TeacherDaoImpl;
 import org.yonitutu.music_academy.data.entities.Instrument;
+import org.yonitutu.music_academy.data.entities.Student;
 import org.yonitutu.music_academy.data.entities.Teacher;
 import org.yonitutu.music_academy.service.dto.TeacherDto;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -22,40 +24,12 @@ public class Main {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("musicacademy");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        Teacher teacher = new Teacher();
-
-        teacher.setId(1);
-        teacher.setName("Prakash");
-        teacher.setAge(35);
-        List<Instrument> instruments = new ArrayList<>();
-        Instrument prakashInstrument = new Instrument();
-        prakashInstrument.setType("Duduk");
-        instruments.add(prakashInstrument);
-        teacher.setInstruments(instruments);
-
-        ModelMapper modelMapper = new ModelMapper();
-
-        TeacherDto teacherDto = modelMapper.map(teacher, TeacherDto.class);
-
-        System.out.println(teacherDto.getInstruments().stream().findFirst().orElse(null).getType());
 
     }
 }
 
-/*
+
      TODO: PLAN -> MUSIC ACADEMY
-           .
-           CREATE INSTRUMENT -> add-instrument|{type}
-           EDIT INSTRUMENT -> edit-instrument|{id}|{type}
-           DELETE INSTRUMENT -> delete-instrument|{id}
-           FIND ALL INSTRUMENTS -> find-instruments
-           FIND SPECIFIC INSTRUMENT -> find-instrument|{id}
-           .
-           CREATE TEACHER -> add-teacher|{name}|{age}
-           EDIT TEACHER -> edit-teacher|{id}|{name}|{age}
-           DELETE TEACHER -> delete-teacher|{id}
-           FIND ALL TEACHERS -> find-teachers
-           FIND SPECIFIC TEACHER -> find-teacher|{id}
            .
            CREATE STUDENT -> add-student|{name}|{age}
            EDIT STUDENT -> edit-student|{id}|{name}|{age}
@@ -78,5 +52,3 @@ public class Main {
            RELATE TEACHER AND INSTRUMENT -> add-teacher-instrument|{teacherName}|{instrumentName}
            RELATE STUDENT AND INSTRUMENT -> add-student-instrument|{studentName}|{instrumentName}
            RELATE STUDENT AND MUSIC GROUP -> add-student-music-group|{studentName}|{musicGroupName}
-
- */

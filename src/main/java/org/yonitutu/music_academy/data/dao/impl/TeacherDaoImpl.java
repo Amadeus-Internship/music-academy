@@ -28,6 +28,12 @@ public class TeacherDaoImpl extends BaseDao implements TeacherDao {
     }
 
     @Override
+    public Teacher findByName(String name){
+        Query query = this.entityManager.createNativeQuery("SELECT * FROM teachers WHERE name = " + name);
+        return (Teacher) query.getSingleResult();
+    }
+
+    @Override
     public Teacher create(Teacher teacher) {
         this.executeTransactional(()-> entityManager.persist(teacher));
 
@@ -48,4 +54,5 @@ public class TeacherDaoImpl extends BaseDao implements TeacherDao {
 
         return entityToDelete;
     }
+
 }

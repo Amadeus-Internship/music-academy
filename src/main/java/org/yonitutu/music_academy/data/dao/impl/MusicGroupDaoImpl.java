@@ -28,6 +28,13 @@ public class MusicGroupDaoImpl extends BaseDao implements MusicGroupDao {
     }
 
     @Override
+    public MusicGroup findByName(String name) {
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM music_groups WHERE name = " + name), MusicGroup.class);
+
+        return (MusicGroup) query.getSingleResult();
+    }
+
+    @Override
     public MusicGroup create(MusicGroup musicGroup) {
         this.executeTransactional(()-> entityManager.persist(musicGroup));
 

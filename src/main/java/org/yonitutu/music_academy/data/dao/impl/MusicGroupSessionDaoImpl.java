@@ -29,6 +29,13 @@ public class MusicGroupSessionDaoImpl extends BaseDao implements MusicGroupSessi
     }
 
     @Override
+    public MusicGroupSession findByName(String name) {
+        Query query = this.entityManager.createNativeQuery(("SELECT * FROM music_group_sessions WHERE name = " + name), MusicGroupSession.class);
+
+        return (MusicGroupSession) query.getSingleResult();
+    }
+
+    @Override
     public MusicGroupSession create(MusicGroupSession musicGroupSession) {
         this.executeTransactional(()-> entityManager.persist(musicGroupSession));
 

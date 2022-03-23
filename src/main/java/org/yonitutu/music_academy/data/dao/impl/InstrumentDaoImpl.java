@@ -14,6 +14,12 @@ public class InstrumentDaoImpl extends BaseDao implements InstrumentDao {
     }
 
     @Override
+    public Instrument findByName(String type){
+        Query query = entityManager.createNativeQuery("SELECT * FROM instruments where type " + type);
+        return (Instrument) query.getSingleResult();
+    }
+
+    @Override
     public List<Instrument> findAll() {
         Query query = this.entityManager.createNativeQuery("SELECT * FROM instruments", Instrument.class);
 
